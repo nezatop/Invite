@@ -1,0 +1,648 @@
+:root {
+  --bg: #fbeef2;
+  --paper: #fffaf3;
+  --pink: #f4a7b9;
+  --pink-deep: #e07f9b;
+  --pink-soft: #fbd9e2;
+  --blue: #a9d2f0;
+  --blue-soft: #dcefff;
+  --lavender: #c9b6e8;
+  --gold: #d9a94e;
+  --ink: #4f3b63;
+  --muted: #8a7598;
+  --card: rgba(255, 255, 255, 0.75);
+  --border: rgba(201, 182, 232, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(160deg, #fde4ec 0%, #f6eefb 45%, #e2f1fd 100%);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------- Фон ---------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  animation: float 18s ease-in-out infinite alternate;
+}
+
+.blob-pink { width: 340px; height: 340px; background: #f9c5d5; top: -80px; left: -100px; }
+.blob-blue { width: 380px; height: 380px; background: #bfe0f8; bottom: -120px; right: -120px; animation-delay: -6s; }
+.blob-lavender { width: 260px; height: 260px; background: #e1d3f5; top: 40%; left: 50%; animation-delay: -12s; }
+
+@keyframes float {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(40px, -30px) scale(1.1); }
+}
+
+.sparkle {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0;
+  animation: twinkle ease-in-out infinite;
+}
+
+.sparkle:nth-child(3n) { color: var(--pink-deep); }
+.sparkle:nth-child(3n + 1) { color: #7fb6e0; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 0.8; transform: scale(1); }
+}
+
+/* ---------- Каркас ---------- */
+
+.stage {
+  position: relative;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 44px 16px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--pink-deep);
+  opacity: 0.5;
+  transition: all 0.4s;
+}
+
+.dot.on {
+  background: var(--pink-deep);
+  opacity: 1;
+}
+
+.screen {
+  width: 100%;
+  max-width: 460px;
+  margin: auto 0;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+/* Страница гримуара / листок скрапбука */
+.page {
+  position: relative;
+  padding: 30px 20px 26px;
+  border-radius: 6px 18px 8px 16px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(169, 210, 240, 0.25) 31px 32px),
+    var(--paper);
+  box-shadow: 0 12px 40px rgba(124, 92, 150, 0.18), 0 2px 0 rgba(255, 255, 255, 0.8) inset;
+  border: 1px solid rgba(224, 127, 155, 0.18);
+}
+
+/* Полоски скотча */
+.tape {
+  position: absolute;
+  top: -12px;
+  width: 92px;
+  height: 26px;
+  opacity: 0.85;
+  background: repeating-linear-gradient(45deg, rgba(244, 167, 185, 0.75) 0 8px, rgba(251, 217, 226, 0.75) 8px 16px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tape-left { left: 18px; transform: rotate(-6deg); }
+.tape-right {
+  right: 18px;
+  transform: rotate(5deg);
+  background: repeating-linear-gradient(45deg, rgba(169, 210, 240, 0.8) 0 8px, rgba(220, 239, 255, 0.8) 8px 16px);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pink-deep);
+}
+
+.title {
+  margin: 0;
+  font-family: 'Forum', serif;
+  font-weight: 400;
+  font-size: clamp(26px, 7vw, 34px);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.subtitle {
+  margin: 0;
+  font-family: 'Forum', serif;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+.text {
+  margin: 0;
+  color: var(--muted);
+}
+
+.hint {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 21px;
+  color: var(--muted);
+  min-height: 1.3em;
+}
+
+.secret {
+  margin: 0;
+  padding: 10px 16px;
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--pink-deep);
+  background: var(--pink-soft);
+  border-radius: 12px;
+  transform: rotate(-1.5deg);
+}
+
+/* ---------- Кнопки ---------- */
+
+.btn {
+  display: inline-block;
+  min-height: 50px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 19px;
+  font-weight: 600;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f7b6c7, var(--pink-deep));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(224, 127, 155, 0.45);
+}
+
+.btn-primary:disabled {
+  background: #e6dbe9;
+  color: var(--muted);
+  box-shadow: none;
+  cursor: default;
+}
+
+.btn-ghost {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 17px;
+  padding: 8px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* ---------- Клубнички и тост ---------- */
+
+.berry {
+  position: absolute;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+  opacity: 0.8;
+  animation: wiggle 4s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 85%, 100% { transform: rotate(0); }
+  90% { transform: rotate(-14deg); }
+  95% { transform: rotate(14deg); }
+}
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 20px;
+  z-index: 60;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--pink);
+  box-shadow: 0 8px 24px rgba(124, 92, 150, 0.25);
+  font-size: 18px;
+  text-align: center;
+}
+
+/* ---------- Гримуар и печать ---------- */
+
+.book {
+  position: relative;
+  width: 200px;
+  height: 260px;
+  margin: 8px 0;
+  perspective: 900px;
+}
+
+.book-pages {
+  position: absolute;
+  inset: 6px 0 6px 10px;
+  border-radius: 4px 12px 12px 4px;
+  background: repeating-linear-gradient(90deg, #fffaf3 0 3px, #f1e6d6 3px 4px);
+}
+
+.book-cover {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  border-radius: 6px 14px 14px 6px;
+  background: linear-gradient(135deg, #f7c3d1, #e9a1b7);
+  border: 3px double var(--gold);
+  box-shadow: inset 12px 0 0 rgba(160, 90, 120, 0.25), 0 10px 30px rgba(224, 127, 155, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 10px;
+}
+
+.book-title {
+  font-family: 'Forum', serif;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #fffaf3;
+  text-shadow: 0 1px 2px rgba(120, 60, 90, 0.4);
+  letter-spacing: 0.05em;
+}
+
+.seal {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(120, 150, 220, 0.5)); }
+  50% { filter: drop-shadow(0 0 14px rgba(120, 170, 240, 0.9)); }
+}
+
+.seal-half {
+  position: absolute;
+  top: 0;
+  width: 39px;
+  height: 78px;
+  background: radial-gradient(circle at 70% 35%, #9cc9ee, #4d86c0);
+}
+
+.seal-half.left {
+  left: 0;
+  border-radius: 39px 0 0 39px;
+  clip-path: polygon(0 0, 100% 0, 85% 30%, 100% 55%, 88% 80%, 100% 100%, 0 100%);
+}
+
+.seal-half.right {
+  right: 0;
+  border-radius: 0 39px 39px 0;
+  background: radial-gradient(circle at 30% 35%, #9cc9ee, #4d86c0);
+}
+
+.seal-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  color: #eef7ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* ---------- Магический шар ---------- */
+
+.ball {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #d7c6f2 25%, #9db8e6 70%, #7c8fd0 100%);
+  box-shadow: 0 14px 40px rgba(124, 143, 208, 0.45), inset -10px -14px 30px rgba(80, 70, 140, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.ball-window {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffaf3, #f3e6fb);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.ball-idle {
+  font-family: 'Forum', serif;
+  font-size: 54px;
+  color: var(--lavender);
+}
+
+.ball-text {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- Главный вопрос ---------- */
+
+.question-buttons {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  flex-wrap: wrap;
+}
+
+.yes-btn {
+  font-size: 22px;
+  padding: 14px 40px;
+}
+
+.no-btn {
+  white-space: nowrap;
+}
+
+/* ---------- Зелья ---------- */
+
+.potions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.potion-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  border: 1.5px dashed var(--border);
+  background: var(--card);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.potion-card.selected {
+  border: 1.5px solid var(--pink-deep);
+  background: var(--pink-soft);
+  box-shadow: 0 6px 20px rgba(224, 127, 155, 0.3);
+}
+
+.potion-emoji {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  border-radius: 50% 50% 46% 46%;
+  background: linear-gradient(180deg, var(--blue-soft), var(--pink-soft));
+}
+
+.potion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.card-label {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.card-sub {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--pink-deep);
+}
+
+.potion-note {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* ---------- Календарь и время ---------- */
+
+.calendar {
+  width: 100%;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.calendar-month {
+  font-family: 'Forum', serif;
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-weekday {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  padding-bottom: 2px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.calendar-day.weekend { color: var(--pink-deep); }
+
+.calendar-day.selected {
+  background: var(--pink-deep);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(224, 127, 155, 0.5);
+}
+
+.times {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.time-chip {
+  padding: 8px 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.time-chip.selected {
+  background: #7fb6e0;
+  border-color: #7fb6e0;
+  color: #fff;
+}
+
+/* ---------- Карта Таро ---------- */
+
+.tarot {
+  position: relative;
+  width: 220px;
+  height: 330px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px double var(--gold);
+  box-shadow: 0 10px 30px rgba(124, 92, 150, 0.25);
+}
+
+.tarot-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 12px;
+  background: radial-gradient(circle at 50% 40%, #fffaf3, #f3e3f6 60%, #dcebfb);
+}
+
+.tarot-num,
+.tarot-name {
+  font-family: 'Forum', serif;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+}
+
+.tarot-name { font-size: 22px; }
+.tarot-icon { font-size: 60px; }
+.tarot-text { font-size: 18px; font-weight: 600; line-height: 1.4; }
+.tarot-foot { font-family: 'Caveat', cursive; color: var(--pink-deep); font-size: 20px; }
+
+.tarot-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity 0.8s;
+}
+
+.tarot-cover.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Финал ---------- */
+
+.summary {
+  padding: 14px 26px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--pink);
+  background: var(--card);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.6;
+}
